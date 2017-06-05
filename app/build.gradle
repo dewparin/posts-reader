@@ -42,6 +42,10 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:$architectureComponentsVersion"
     compile "android.arch.persistence.room:runtime:$architectureComponentsVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$architectureComponentsVersion"
+
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
 }
 repositories {
     mavenCentral()
