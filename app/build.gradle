@@ -29,4 +29,10 @@ dependencies {
 
     compile "com.android.support:appcompat-v7:$supportLibVersion"
     compile "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
+
+    compile "android.arch.lifecycle:runtime:$architectureComponentsVersion"
+    compile "android.arch.lifecycle:extensions:$architectureComponentsVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$architectureComponentsVersion"
+    compile "android.arch.persistence.room:runtime:$architectureComponentsVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$architectureComponentsVersion"
 }
