@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -17,10 +19,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     testCompile "junit:junit:$junitVersion"
     androidTestCompile("com.android.support.test.espresso:espresso-core:$espressoVersion", {
@@ -35,4 +42,7 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:$architectureComponentsVersion"
     compile "android.arch.persistence.room:runtime:$architectureComponentsVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$architectureComponentsVersion"
+}
+repositories {
+    mavenCentral()
 }
