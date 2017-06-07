@@ -1,16 +1,15 @@
 package com.blacklenspub.postsreader.data
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import com.blacklenspub.postsreader.data.model.Post
 import com.blacklenspub.postsreader.data.remote.PostsReaderApi
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class PostRepository : PostDataSource {
+
+    // TODO : integrate local source
 
     private val remoteSource by lazy {
         retrofit.create(PostsReaderApi::class.java)
@@ -23,25 +22,9 @@ class PostRepository : PostDataSource {
                 .build()
     }
 
-    override fun getAllPosts(): LiveData<List<Post>> {
-        val liveData = MutableLiveData<List<Post>>()
-        remoteSource.getAllPosts()
-                .subscribe {
-                    liveData.value = it
-                }
-        return liveData
-    }
+    override fun getAllPosts(): Observable<List<Post>> =
+            remoteSource.getAllPosts()
 
-
-    override fun getPostById(id: String): LiveData<Post> {
-        val liveData = MutableLiveData<Post>()
-        remoteSource.getPostById(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    liveData.value = it
-                }
-        return liveData
-    }
-
+    override fun getPostById(id: String): Observable<Post> =
+            remoteSource.getPostById(id)
 }
