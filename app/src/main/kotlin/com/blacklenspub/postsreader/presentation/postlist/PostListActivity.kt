@@ -1,5 +1,6 @@
 package com.blacklenspub.postsreader.presentation.postlist
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.blacklenspub.postsreader.R
@@ -7,7 +8,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 class PostListActivity : AppCompatActivity() {
 
-    private val viewModel by lazy { PostListViewModel() }
+    private val viewModel by lazy { ViewModelProviders.of(this).get(PostListViewModel::class.java) }
     private val compositeDisposable by lazy { CompositeDisposable() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
