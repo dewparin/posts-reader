@@ -5,7 +5,9 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.blacklenspub.postsreader.R
+import com.blacklenspub.postsreader.data.model.Post
 
 class PostListActivity : LifecycleActivity() {
 
@@ -20,10 +22,16 @@ class PostListActivity : LifecycleActivity() {
 
     private fun getAllPosts() {
         viewModel.getAllPosts().observe(this, Observer {
-            it?.let {
-                Log.d("DEW", "${it.size}")
-                // TODO : update UI
+            if (it != null) {
+                showPosts(it)
+            } else {
+                Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+    private fun showPosts(posts: List<Post>) {
+        Log.d("DEW", "${posts.size}")
+        // TODO : update UI
     }
 }

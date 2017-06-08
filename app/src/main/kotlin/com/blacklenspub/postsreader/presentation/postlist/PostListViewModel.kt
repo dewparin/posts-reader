@@ -17,10 +17,9 @@ class PostListViewModel : ViewModel() {
         val liveResult = MutableLiveData<List<Post>>()
         postRepo.getAllPosts()
                 .subscribeOn(Schedulers.io())
-                .subscribe { posts ->
+                .subscribe { posts, _ ->
                     liveResult.postValue(posts)
                 }
-            // TODO : handle error
         return liveResult
     }
 }
