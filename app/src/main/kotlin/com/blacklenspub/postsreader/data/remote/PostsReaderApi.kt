@@ -1,16 +1,16 @@
 package com.blacklenspub.postsreader.data.remote
 
 import com.blacklenspub.postsreader.data.model.Post
-import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface PostsReaderApi {
 
     @GET("posts")
-    fun getAllPosts(): Observable<List<Post>>
+    fun getAllPosts(): Single<List<Post>>
 
     @GET("posts/{id}")
-    fun getPostById(@Path("id") id: String): Observable<Post>
+    fun getPostById(@Path("id") id: String): Single<Post>
 }
 
