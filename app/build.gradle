@@ -35,6 +35,7 @@ dependencies {
     })
 
     compile "com.android.support:appcompat-v7:$supportLibVersion"
+    compile "com.android.support:recyclerview-v7:$supportLibVersion"
     compile "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
 
     compile "android.arch.lifecycle:runtime:$architectureComponentsVersion"
