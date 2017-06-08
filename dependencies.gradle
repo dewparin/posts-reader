@@ -13,5 +13,4 @@ ext {
     architectureComponentsVersion = '1.0.0-alpha1'
 
     retrofitVersion = '2.3.0'
-    rxAndroidVersion = '2.0.1'
 }

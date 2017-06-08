@@ -1,15 +1,15 @@
 package com.blacklenspub.postsreader.presentation.postlist
 
+import android.arch.lifecycle.LifecycleActivity
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.blacklenspub.postsreader.R
-import io.reactivex.disposables.CompositeDisposable
 
-class PostListActivity : AppCompatActivity() {
+class PostListActivity : LifecycleActivity() {
 
     private val viewModel by lazy { ViewModelProviders.of(this).get(PostListViewModel::class.java) }
-    private val compositeDisposable by lazy { CompositeDisposable() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,14 +19,11 @@ class PostListActivity : AppCompatActivity() {
     }
 
     private fun getAllPosts() {
-        val disposable = viewModel.getAllPosts().subscribe {
-            // TODO : update UI
-        }
-        compositeDisposable.add(disposable)
-    }
-
-    override fun onDestroy() {
-        compositeDisposable.dispose()
-        super.onDestroy()
+        viewModel.getAllPosts().observe(this, Observer {
+            it?.let {
+                Log.d("DEW", "${it.size}")
+                // TODO : update UI
+            }
+        })
     }
 }
