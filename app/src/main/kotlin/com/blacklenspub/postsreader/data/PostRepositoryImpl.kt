@@ -7,11 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class PostRepositoryImpl : PostRepository {
 
-    // TODO : integrate local source
-
-    private val remoteSource by lazy {
-        retrofit.create(PostsReaderApi::class.java)
-    }
+    private val remoteSource by lazy { retrofit.create(PostsReaderApi::class.java) }
     private val retrofit by lazy {
         Retrofit.Builder()
                 .baseUrl("http://jsonplaceholder.typicode.com")
@@ -19,6 +15,8 @@ class PostRepositoryImpl : PostRepository {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
     }
+
+    // TODO : integrate local source
 
     override fun getAllPosts() = remoteSource.getAllPosts()
 
