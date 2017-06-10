@@ -8,7 +8,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.blacklenspub.postsreader.R
-import com.blacklenspub.postsreader.data.model.Post
+import com.blacklenspub.postsreader.data.entity.Post
 import kotlinx.android.synthetic.main.activity_post_list.*
 
 class PostListActivity : LifecycleActivity() {

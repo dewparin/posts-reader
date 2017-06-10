@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.blacklenspub.postsreader.R
-import com.blacklenspub.postsreader.data.model.Post
+import com.blacklenspub.postsreader.data.entity.Post
 import kotlin.properties.Delegates
 
 class PostAdapter : RecyclerView.Adapter<PostAdapter.ViewHolder>() {

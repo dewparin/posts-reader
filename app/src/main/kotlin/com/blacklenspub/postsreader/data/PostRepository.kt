@@ -1,6 +1,6 @@
 package com.blacklenspub.postsreader.data
 
-import com.blacklenspub.postsreader.data.model.Post
+import com.blacklenspub.postsreader.data.entity.Post
 import io.reactivex.Single
 
 interface PostRepository {

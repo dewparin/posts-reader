@@ -5,7 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.blacklenspub.postsreader.data.PostRepository
 import com.blacklenspub.postsreader.data.PostRepositoryImpl
-import com.blacklenspub.postsreader.data.model.Post
+import com.blacklenspub.postsreader.data.entity.Post
 import io.reactivex.schedulers.Schedulers
 
 class PostListViewModel : ViewModel() {

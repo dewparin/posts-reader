@@ -1,6 +1,6 @@
 package com.blacklenspub.postsreader.data.remote
 
-import com.blacklenspub.postsreader.data.model.Post
+import com.blacklenspub.postsreader.data.entity.Post
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
