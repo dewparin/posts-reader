@@ -15,17 +15,17 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
 
-        private var instance: AppDatabase? = null
+        private val DB_FILE_NAME = "posts-reader-db"
 
-        fun getInstance(context: Context): AppDatabase {
-            instance = instance ?: Room.databaseBuilder(context.applicationContext,
-                    AppDatabase::class.java,
-                    "posts-reader-db").build()
-            return instance!!   // I'm super sure that instance is not null here.
-        }
+        lateinit var instance: AppDatabase
 
-        fun destroyInstance() {
-            instance = null
+        fun init(context: Context): AppDatabase {
+//            instance = Room.databaseBuilder(context.applicationContext,
+            instance = Room.inMemoryDatabaseBuilder(context.applicationContext,
+                    AppDatabase::class.java)
+//                    DB_FILE_NAME)
+                    .build()
+            return instance
         }
     }
 }

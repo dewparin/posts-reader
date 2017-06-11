@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.widget.Toast
 import com.blacklenspub.postsreader.R
 import com.blacklenspub.postsreader.data.entity.Post
@@ -43,9 +44,12 @@ class PostListActivity : LifecycleActivity() {
     private fun getAllPosts() {
         viewModel.getAllPosts().observe(this, Observer {
             if (it != null) {
+                Log.d("Dew", "PostListActivity # Thread ID ${Thread.currentThread().id}")
+                Toast.makeText(this, "Got ${it.size} posts", Toast.LENGTH_LONG).show()
                 showPosts(it)
             } else {
-                Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
+                Log.d("Dew", "PostListActivity # ERROR : Thread ID ${Thread.currentThread().id}")
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
             }
         })
     }

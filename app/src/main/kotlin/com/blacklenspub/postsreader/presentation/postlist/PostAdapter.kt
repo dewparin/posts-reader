@@ -29,7 +29,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
         private val tvTitle: TextView = view.findViewById(R.id.tvPostTitle) as TextView
 
-        var post: Post by Delegates.observable(Post("", "", "")) { _, _, postItem ->
+        var post: Post by Delegates.observable(Post()) { _, _, postItem ->
             tvTitle.text = postItem.title
         }
 

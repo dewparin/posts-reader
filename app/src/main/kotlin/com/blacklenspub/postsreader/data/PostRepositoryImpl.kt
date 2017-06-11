@@ -1,11 +1,16 @@
 package com.blacklenspub.postsreader.data
 
+import com.blacklenspub.postsreader.data.entity.Post
+import com.blacklenspub.postsreader.data.local.AppDatabase
 import com.blacklenspub.postsreader.data.remote.PostsReaderApi
+import io.reactivex.Flowable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class PostRepositoryImpl : PostRepository {
+
+    // TODO : inject all sources
 
     private val remoteSource by lazy { retrofit.create(PostsReaderApi::class.java) }
     private val retrofit by lazy {
@@ -16,9 +21,18 @@ class PostRepositoryImpl : PostRepository {
                 .build()
     }
 
-    // TODO : integrate local source
+    private val localSource by lazy { AppDatabase.instance }
 
-    override fun getAllPosts() = remoteSource.getAllPosts()
+    override fun addNewPost(post: Post) {
+        localSource.postDao().insertOrUpdatePosts(post)
+    }
 
-    override fun getPostById(id: String) = remoteSource.getPostById(id)
+    override fun getAllPosts(): Flowable<List<Post>> {
+        // TODO : get remote posts
+        return localSource.postDao().getAllPosts()
+    }
+
+    override fun getPostById(id: String): Flowable<Post> {
+        TODO("NOT IMPLEMENTED")
+    }
 }

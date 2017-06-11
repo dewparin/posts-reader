@@ -1,11 +1,13 @@
 package com.blacklenspub.postsreader.data
 
 import com.blacklenspub.postsreader.data.entity.Post
-import io.reactivex.Single
+import io.reactivex.Flowable
 
 interface PostRepository {
 
-    fun getAllPosts(): Single<List<Post>>
+    fun addNewPost(post: Post)
 
-    fun getPostById(id: String): Single<Post>
+    fun getAllPosts(): Flowable<List<Post>>
+
+    fun getPostById(id: String): Flowable<Post>
 }

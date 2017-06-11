@@ -40,10 +40,12 @@ dependencies {
 
     compile "android.arch.lifecycle:runtime:$architectureComponentsVersion"
     compile "android.arch.lifecycle:extensions:$architectureComponentsVersion"
+    compile "android.arch.lifecycle:reactivestreams:$architectureComponentsVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$architectureComponentsVersion"
+
     compile "android.arch.persistence.room:runtime:$architectureComponentsVersion"
     compile "android.arch.persistence.room:rxjava2:$architectureComponentsVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$architectureComponentsVersion"
+    kapt "android.arch.persistence.room:compiler:$architectureComponentsVersion"
 
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
