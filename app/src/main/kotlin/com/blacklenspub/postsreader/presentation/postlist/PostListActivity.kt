@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import com.blacklenspub.postsreader.R
 import com.blacklenspub.postsreader.data.entity.Post
+import com.blacklenspub.postsreader.presentation.postdetail.PostDetailActivity
 import kotlinx.android.synthetic.main.activity_post_list.*
 
 class PostListActivity : LifecycleActivity() {
@@ -35,7 +36,8 @@ class PostListActivity : LifecycleActivity() {
             addItemDecoration(DividerItemDecoration(context, linearLayoutManager.orientation))
 
             postAdapter.onPostClickListener = {
-                Toast.makeText(this@PostListActivity, it, Toast.LENGTH_SHORT).show()
+                val intent = PostDetailActivity.buildIntent(this@PostListActivity, it)
+                startActivity(intent)
             }
             adapter = postAdapter
         }
@@ -45,7 +47,6 @@ class PostListActivity : LifecycleActivity() {
         viewModel.getAllPosts().observe(this, Observer {
             if (it != null) {
                 Log.d("Dew", "PostListActivity # Thread ID ${Thread.currentThread().id}")
-                Toast.makeText(this, "Got ${it.size} posts", Toast.LENGTH_LONG).show()
                 showPosts(it)
             } else {
                 Log.d("Dew", "PostListActivity # ERROR : Thread ID ${Thread.currentThread().id}")
