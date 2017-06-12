@@ -1,13 +1,13 @@
 package com.blacklenspub.postsreader.data
 
+import android.arch.lifecycle.LiveData
 import com.blacklenspub.postsreader.data.entity.Post
-import io.reactivex.Flowable
 
 interface PostRepository {
 
     fun insertOrUpdate(post: Post)
 
-    fun getAllPosts(): Flowable<List<Post>>
+    fun getAllPosts(): LiveData<List<Post>>
 
-    fun getPostById(id: String): Flowable<Post>
+    fun getPostById(id: String): LiveData<Post>
 }

@@ -40,7 +40,6 @@ dependencies {
 
     compile "android.arch.lifecycle:runtime:$architectureComponentsVersion"
     compile "android.arch.lifecycle:extensions:$architectureComponentsVersion"
-    compile "android.arch.lifecycle:reactivestreams:$architectureComponentsVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$architectureComponentsVersion"
 
     compile "android.arch.persistence.room:runtime:$architectureComponentsVersion"

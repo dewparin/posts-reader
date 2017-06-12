@@ -6,9 +6,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.widget.Toast
 import com.blacklenspub.postsreader.R
+import com.blacklenspub.postsreader.data.PostRepositoryImpl
 import com.blacklenspub.postsreader.data.entity.Post
 import kotlinx.android.synthetic.main.activity_post_detail.*
 
@@ -56,6 +58,15 @@ class PostDetailActivity : LifecycleActivity() {
     private fun setPostDetail(post: Post) {
         tvPostTitle.text = post.title
         tvPostBody.text = post.body
+    }
+
+    // TODO : remove this code
+    fun funny(post: Post) {
+        Thread(Runnable {
+            SystemClock.sleep(3000)
+            post.body = "HAHAHAHA"
+            PostRepositoryImpl().insertOrUpdate(post)
+        }).start()
     }
 }
 

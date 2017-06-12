@@ -1,10 +1,10 @@
 package com.blacklenspub.postsreader.data
 
+import android.arch.lifecycle.LiveData
 import android.util.Log
 import com.blacklenspub.postsreader.data.entity.Post
 import com.blacklenspub.postsreader.data.local.AppDatabase
 import com.blacklenspub.postsreader.data.remote.PostsReaderApi
-import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -29,7 +29,7 @@ class PostRepositoryImpl : PostRepository {
         localSource.insertOrUpdatePosts(post)
     }
 
-    override fun getAllPosts(): Flowable<List<Post>> {
+    override fun getAllPosts(): LiveData<List<Post>> {
         remoteSource.getAllPosts()
                 .subscribeOn(Schedulers.io())
                 .subscribe { posts ->
@@ -39,7 +39,7 @@ class PostRepositoryImpl : PostRepository {
         return localSource.getAllPosts()
     }
 
-    override fun getPostById(id: String): Flowable<Post> {
+    override fun getPostById(id: String): LiveData<Post> {
         remoteSource.getPostById(id)
                 .subscribeOn(Schedulers.io())
                 .subscribe { post ->
