@@ -13,4 +13,6 @@ ext {
     architectureComponentsVersion = '1.0.0-alpha2'
 
     retrofitVersion = '2.3.0'
+
+    daggerVersion = '2.11'
 }

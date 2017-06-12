@@ -38,6 +38,9 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$supportLibVersion"
     compile "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
 
+    compile "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
     compile "android.arch.lifecycle:runtime:$architectureComponentsVersion"
     compile "android.arch.lifecycle:extensions:$architectureComponentsVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$architectureComponentsVersion"
