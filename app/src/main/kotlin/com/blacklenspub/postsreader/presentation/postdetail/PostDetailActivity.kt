@@ -31,7 +31,7 @@ class PostDetailActivity : LifecycleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_detail)
-        intent.let {
+        intent?.let {
             retrieveBundleData(it)
             getPostDetail()
         }
