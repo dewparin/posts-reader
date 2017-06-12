@@ -23,10 +23,10 @@ class PostRepositoryImpl : PostRepository {
                 .build()
     }
 
-    private val localSource by lazy { AppDatabase.instance }
+    private val localSource by lazy { AppDatabase.instance.postDao() }
 
     override fun addNewPost(post: Post) {
-        localSource.postDao().insertOrUpdatePosts(post)
+        localSource.insertOrUpdatePosts(post)
     }
 
     override fun getAllPosts(): Flowable<List<Post>> {
@@ -34,12 +34,18 @@ class PostRepositoryImpl : PostRepository {
                 .subscribeOn(Schedulers.io())
                 .subscribe { posts ->
                     Log.d("Dew", "PostRepositoryImpl # Got Posts from API. Thread ID ${Thread.currentThread().id}")
-                    localSource.postDao().insertOrUpdatePosts(*posts.toTypedArray())
+                    localSource.insertOrUpdatePosts(*posts.toTypedArray())
                 }
-        return localSource.postDao().getAllPosts()
+        return localSource.getAllPosts()
     }
 
     override fun getPostById(id: String): Flowable<Post> {
-        TODO("NOT IMPLEMENTED")
+        remoteSource.getPostById(id)
+                .subscribeOn(Schedulers.io())
+                .subscribe { post ->
+                    Log.d("Dew", "PostRepositoryImpl # Got post by id from API. Thread ID ${Thread.currentThread().id}")
+                    localSource.insertOrUpdatePosts(post)
+                }
+        return localSource.getPostById(id)
     }
 }

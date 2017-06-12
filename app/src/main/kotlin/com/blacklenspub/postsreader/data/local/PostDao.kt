@@ -20,6 +20,6 @@ interface PostDao {
 
     // kotlin rename id to arg0
     @Query("SELECT * FROM post WHERE id = :arg0")
-    fun getPostById(id: Int): Flowable<Post>
+    fun getPostById(id: String): Flowable<Post>
 }
 
