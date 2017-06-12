@@ -34,12 +34,12 @@ class PostDetailActivity : LifecycleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_detail)
         intent?.let {
-            retrieveBundleData(it)
+            retrieveIntentData(it)
             getPostDetail()
         }
     }
 
-    private fun retrieveBundleData(data: Intent) {
+    private fun retrieveIntentData(data: Intent) {
         postId = data.getStringExtra(KEY_POST_ID)
     }
 
