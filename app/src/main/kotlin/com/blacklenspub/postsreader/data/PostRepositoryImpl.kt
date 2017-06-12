@@ -25,7 +25,7 @@ class PostRepositoryImpl : PostRepository {
 
     private val localSource by lazy { AppDatabase.instance.postDao() }
 
-    override fun addNewPost(post: Post) {
+    override fun insertOrUpdate(post: Post) {
         localSource.insertOrUpdatePosts(post)
     }
 

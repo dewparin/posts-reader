@@ -5,7 +5,7 @@ import io.reactivex.Flowable
 
 interface PostRepository {
 
-    fun addNewPost(post: Post)
+    fun insertOrUpdate(post: Post)
 
     fun getAllPosts(): Flowable<List<Post>>
 
