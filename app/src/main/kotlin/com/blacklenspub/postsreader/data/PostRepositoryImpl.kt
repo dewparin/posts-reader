@@ -6,22 +6,10 @@ import com.blacklenspub.postsreader.data.entity.Post
 import com.blacklenspub.postsreader.data.local.AppDatabase
 import com.blacklenspub.postsreader.data.remote.PostsReaderApi
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 
-class PostRepositoryImpl : PostRepository {
+class PostRepositoryImpl(val remoteSource: PostsReaderApi) : PostRepository {
 
-    // TODO : inject all sources
-
-    private val remoteSource by lazy { retrofit.create(PostsReaderApi::class.java) }
-    private val retrofit by lazy {
-        Retrofit.Builder()
-                .baseUrl("http://jsonplaceholder.typicode.com")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-    }
+    // TODO : inject local source
 
     private val localSource by lazy { AppDatabase.instance.postDao() }
 
@@ -32,9 +20,11 @@ class PostRepositoryImpl : PostRepository {
     override fun getAllPosts(): LiveData<List<Post>> {
         remoteSource.getAllPosts()
                 .subscribeOn(Schedulers.io())
-                .subscribe { posts ->
-                    Log.d("Dew", "PostRepositoryImpl # Got Posts from API. Thread ID ${Thread.currentThread().id}")
-                    localSource.insertOrUpdatePosts(*posts.toTypedArray())
+                .subscribe { posts, _ ->
+                    posts?.let {
+                        Log.d("Dew", "PostRepositoryImpl # Got Posts from API. Thread ID ${Thread.currentThread().id}")
+                        localSource.insertOrUpdatePosts(*posts.toTypedArray())
+                    }
                 }
         return localSource.getAllPosts()
     }
@@ -42,9 +32,11 @@ class PostRepositoryImpl : PostRepository {
     override fun getPostById(id: String): LiveData<Post> {
         remoteSource.getPostById(id)
                 .subscribeOn(Schedulers.io())
-                .subscribe { post ->
-                    Log.d("Dew", "PostRepositoryImpl # Got post by id from API. Thread ID ${Thread.currentThread().id}")
-                    localSource.insertOrUpdatePosts(post)
+                .subscribe { post, _ ->
+                    post?.let {
+                        Log.d("Dew", "PostRepositoryImpl # Got post by id from API. Thread ID ${Thread.currentThread().id}")
+                        localSource.insertOrUpdatePosts(post)
+                    }
                 }
         return localSource.getPostById(id)
     }

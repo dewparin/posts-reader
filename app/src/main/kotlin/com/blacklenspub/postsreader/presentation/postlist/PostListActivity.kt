@@ -8,6 +8,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
+import com.blacklenspub.postsreader.PostsReaderApplication
 import com.blacklenspub.postsreader.R
 import com.blacklenspub.postsreader.data.entity.Post
 import com.blacklenspub.postsreader.presentation.postdetail.PostDetailActivity
@@ -15,7 +16,11 @@ import kotlinx.android.synthetic.main.activity_post_list.*
 
 class PostListActivity : LifecycleActivity() {
 
-    private val viewModel by lazy { ViewModelProviders.of(this).get(PostListViewModel::class.java) }
+    private val viewModel by lazy {
+        ViewModelProviders.of(this).get(PostListViewModel::class.java).also {
+            PostsReaderApplication.component.inject(it)
+        }
+    }
 
     private val postAdapter = PostAdapter()
 

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
 import android.widget.Toast
+import com.blacklenspub.postsreader.PostsReaderApplication
 import com.blacklenspub.postsreader.R
 import com.blacklenspub.postsreader.data.PostRepositoryImpl
 import com.blacklenspub.postsreader.data.entity.Post
@@ -28,7 +29,11 @@ class PostDetailActivity : LifecycleActivity() {
 
     lateinit var postId: String
 
-    val viewModel: PostDetailViewModel by lazy { ViewModelProviders.of(this).get(PostDetailViewModel::class.java) }
+    val viewModel: PostDetailViewModel by lazy {
+        ViewModelProviders.of(this).get(PostDetailViewModel::class.java).also {
+            PostsReaderApplication.component.inject(it)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,12 +66,12 @@ class PostDetailActivity : LifecycleActivity() {
     }
 
     // TODO : remove this code
-    fun funny(post: Post) {
-        Thread(Runnable {
-            SystemClock.sleep(3000)
-            post.body = "HAHAHAHA"
-            PostRepositoryImpl().insertOrUpdate(post)
-        }).start()
-    }
+//    fun funny(post: Post) {
+//        Thread(Runnable {
+//            SystemClock.sleep(3000)
+//            post.body = "HAHAHAHA"
+//            PostRepositoryImpl().insertOrUpdate(post)
+//        }).start()
+//    }
 }
 
