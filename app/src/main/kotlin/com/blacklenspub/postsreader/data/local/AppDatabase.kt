@@ -20,10 +20,9 @@ abstract class AppDatabase : RoomDatabase() {
         lateinit var instance: AppDatabase
 
         fun init(context: Context): AppDatabase {
-//            instance = Room.databaseBuilder(context.applicationContext,
-            instance = Room.inMemoryDatabaseBuilder(context.applicationContext,
-                    AppDatabase::class.java)
-//                    DB_FILE_NAME)
+            instance = Room.databaseBuilder(context.applicationContext,
+                    AppDatabase::class.java,
+                    DB_FILE_NAME)
                     .build()
             return instance
         }

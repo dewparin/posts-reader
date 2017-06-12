@@ -3,11 +3,11 @@ package com.blacklenspub.postsreader.presentation.postlist
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.ViewModel
+import android.os.SystemClock
 import android.util.Log
 import com.blacklenspub.postsreader.data.PostRepository
 import com.blacklenspub.postsreader.data.PostRepositoryImpl
 import com.blacklenspub.postsreader.data.entity.Post
-import io.reactivex.schedulers.Schedulers
 
 class PostListViewModel : ViewModel() {
 
@@ -15,12 +15,10 @@ class PostListViewModel : ViewModel() {
     private val postRepo: PostRepository by lazy { PostRepositoryImpl() }
 
     fun getAllPosts(): LiveData<List<Post>> {
-//        addNewPost()
-        // TODO: find a way to unsubscribe underneath stream
+        // Room already create Flowable that run our task in worker thread. So, we don't have to subscribe on IO().
         return LiveDataReactiveStreams.fromPublisher(
                 postRepo.getAllPosts()
-                        .subscribeOn(Schedulers.io())
-                        .doOnEach {
+                        .doOnNext {
                             Log.d("Dew", "PostListViewModel # Thread ID ${Thread.currentThread().id}")
                         }
         )

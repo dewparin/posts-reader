@@ -1,9 +1,11 @@
 package com.blacklenspub.postsreader.data
 
+import android.util.Log
 import com.blacklenspub.postsreader.data.entity.Post
 import com.blacklenspub.postsreader.data.local.AppDatabase
 import com.blacklenspub.postsreader.data.remote.PostsReaderApi
 import io.reactivex.Flowable
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,7 +30,12 @@ class PostRepositoryImpl : PostRepository {
     }
 
     override fun getAllPosts(): Flowable<List<Post>> {
-        // TODO : get remote posts
+        remoteSource.getAllPosts()
+                .subscribeOn(Schedulers.io())
+                .subscribe { posts ->
+                    Log.d("Dew", "PostRepositoryImpl # Got Posts from API. Thread ID ${Thread.currentThread().id}")
+                    localSource.postDao().insertOrUpdatePosts(*posts.toTypedArray())
+                }
         return localSource.postDao().getAllPosts()
     }
 
