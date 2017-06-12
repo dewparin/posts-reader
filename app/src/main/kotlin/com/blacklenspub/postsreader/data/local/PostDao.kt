@@ -10,15 +10,13 @@ import io.reactivex.Flowable
 @Dao
 interface PostDao {
 
-    // room doens't know how to map cursor to Observable, but you can use Flowable
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOrUpdatePosts(vararg posts: Post)
 
     @Query("SELECT * FROM post")
     fun getAllPosts(): Flowable<List<Post>>
 
-    // kotlin rename id to arg0
+    // id is changed to arg0 in generated code
     @Query("SELECT * FROM post WHERE id = :arg0")
     fun getPostById(id: String): Flowable<Post>
 }
