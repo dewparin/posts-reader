@@ -11,6 +11,11 @@ class PostDetailViewModel : ViewModel() {
     @Inject
     lateinit var postRepo: PostRepository
 
-    fun getPostDetail(postId: String): LiveData<Post> = postRepo.getPostById(postId)
+    private var post: LiveData<Post>? = null
+
+    fun getPostDetail(postId: String): LiveData<Post> {
+        post = post ?: postRepo.getPostById(postId)
+        return post!!   // Don't worry I'm a good Engineer ;-)
+    }
 }
 
