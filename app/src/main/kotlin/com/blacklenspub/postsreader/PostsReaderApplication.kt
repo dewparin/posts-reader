@@ -22,9 +22,9 @@ class PostsReaderApplication : Application() {
 
     private fun buildDependencyGraph() {
         component = DaggerAppComponent.builder()
-                .postRepositoryModule(PostRepositoryModule())
                 .localSourceModule(LocalSourceModule(applicationContext))
                 .remoteSourceModule(RemoteSourceModule(BASE_URL))
+                .postRepositoryModule(PostRepositoryModule())
                 .build()
     }
 }
