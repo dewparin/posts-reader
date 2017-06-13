@@ -2,15 +2,14 @@ package com.blacklenspub.postsreader.presentation.postlist
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Observer
 import com.blacklenspub.postsreader.data.PostRepository
 import com.blacklenspub.postsreader.data.entity.Post
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.IsEqual
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
 class PostListViewModelTest {
@@ -50,12 +49,13 @@ class PostListViewModelTest {
 
     @Test
     fun getAllPosts() {
-        val dbLiveData = MutableLiveData<List<Post>>().apply { value = mockedPosts }
-        `when`(postRepo.getAllPosts()).thenReturn(dbLiveData)
+        val repoLiveData = MutableLiveData<List<Post>>().apply { value = mockedPosts }
+        `when`(postRepo.getAllPosts()).thenReturn(repoLiveData)
+        val observer = mock(Observer::class.java)
 
-        val resultLiveData = sutViewModel.getAllPosts()
+        sutViewModel.getAllPosts().observeForever(observer as Observer<List<Post>>)
 
-        assertThat(resultLiveData.value, IsEqual(mockedPosts))
+        verify(observer).onChanged(mockedPosts)
     }
 }
 
