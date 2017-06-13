@@ -56,7 +56,32 @@ class PostListViewModelTest {
         sutViewModel.getAllPosts().observeForever(observer as Observer<List<Post>>)
 
         verify(postRepo).getAllPosts()
+        verifyNoMoreInteractions(postRepo)
         verify(observer).onChanged(mockedPosts)
+        verifyNoMoreInteractions(observer)
+    }
+
+    @Test
+    fun getAllPosts_secondCalled_shouldReturnsCachedData() {
+        val repoLiveData = MutableLiveData<List<Post>>().apply { value = mockedPosts }
+        `when`(postRepo.getAllPosts()).thenReturn(repoLiveData)
+        val observer = mock(Observer::class.java)
+
+        sutViewModel.getAllPosts().observeForever(observer as Observer<List<Post>>)
+
+        verify(postRepo).getAllPosts()
+        verifyNoMoreInteractions(postRepo)
+        verify(observer).onChanged(mockedPosts)
+        verifyNoMoreInteractions(observer)
+
+        // below is the 2nd request
+
+        reset(postRepo)
+        reset(observer)
+        sutViewModel.getAllPosts()
+
+        verifyNoMoreInteractions(postRepo)
+        verifyNoMoreInteractions(observer)
     }
 }
 

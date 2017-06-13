@@ -51,7 +51,7 @@ class PostDetailViewModelTest {
     }
 
     @Test
-    fun getPostDetail_getPostForTheSecondTime_ShouldReturnCachedPost() {
+    fun getPostDetail_secondCalled_shouldReturnsCachedData() {
         val repoLiveData = MutableLiveData<Post>().apply { value = mockedPost }
         `when`(postRepo.getPostById(mockedPostId)).thenReturn(repoLiveData)
         val observer = mock(Observer::class.java)
