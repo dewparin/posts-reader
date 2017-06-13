@@ -1,14 +1,16 @@
 package com.blacklenspub.postsreader
 
 import android.app.Application
-import com.blacklenspub.postsreader.data.di.DataModule
-import com.blacklenspub.postsreader.presentation.di.DaggerPostsReaderComponent
-import com.blacklenspub.postsreader.presentation.di.PostsReaderComponent
+import com.blacklenspub.postsreader.data.di.LocalSourceModule
+import com.blacklenspub.postsreader.data.di.PostRepositoryModule
+import com.blacklenspub.postsreader.data.di.RemoteSourceModule
+import com.blacklenspub.postsreader.presentation.di.AppComponent
+import com.blacklenspub.postsreader.presentation.di.DaggerAppComponent
 
 class PostsReaderApplication : Application() {
 
     companion object {
-        lateinit var component: PostsReaderComponent
+        lateinit var component: AppComponent
     }
 
     val BASE_URL = "http://jsonplaceholder.typicode.com"
@@ -19,8 +21,10 @@ class PostsReaderApplication : Application() {
     }
 
     private fun buildDependencyGraph() {
-        component = DaggerPostsReaderComponent.builder()
-                .dataModule(DataModule(applicationContext, BASE_URL))
+        component = DaggerAppComponent.builder()
+                .postRepositoryModule(PostRepositoryModule())
+                .localSourceModule(LocalSourceModule(applicationContext))
+                .remoteSourceModule(RemoteSourceModule(BASE_URL))
                 .build()
     }
 }
