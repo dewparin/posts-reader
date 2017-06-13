@@ -55,6 +55,7 @@ class PostListViewModelTest {
 
         sutViewModel.getAllPosts().observeForever(observer as Observer<List<Post>>)
 
+        verify(postRepo).getAllPosts()
         verify(observer).onChanged(mockedPosts)
     }
 }
