@@ -1,12 +1,16 @@
 package com.blacklenspub.postsreader.data
 
+import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.MutableLiveData
 import com.blacklenspub.postsreader.data.entity.Post
 import com.blacklenspub.postsreader.data.local.PostDao
 import com.blacklenspub.postsreader.data.remote.PostsReaderApi
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.IsEqual
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
@@ -15,6 +19,10 @@ import org.mockito.MockitoAnnotations
 
 class PostRepositoryImplTest {
 
+    // we need to set this rule in order to execute LiveData operation current thread.
+    @Rule @JvmField
+    val instantExecutorRule = InstantTaskExecutorRule()
+
     @Mock
     lateinit var localSource: PostDao
     @Mock
@@ -22,7 +30,7 @@ class PostRepositoryImplTest {
 
     lateinit var sutRepo: PostRepositoryImpl
 
-    val mockPosts = listOf(
+    val mockedPosts = listOf(
             Post().apply {
                 id = "1"
                 title = "1 Title"
@@ -40,7 +48,6 @@ class PostRepositoryImplTest {
             }
     )
 
-
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
@@ -49,14 +56,32 @@ class PostRepositoryImplTest {
 
     @Test
     fun getAllPosts() {
-        `when`(remoteSource.getAllPosts()).thenReturn(Single.just(mockPosts))
-        val liveData = MutableLiveData<List<Post>>()
-        `when`(localSource.getAllPosts()).thenReturn(liveData)
+        `when`(remoteSource.getAllPosts()).thenReturn(Single.just(mockedPosts))
+        val dbLiveData = MutableLiveData<List<Post>>().apply { value = mockedPosts }
+        `when`(localSource.getAllPosts()).thenReturn(dbLiveData)
 
         val resultLiveData = sutRepo.getAllPosts()
 
-        verify(localSource).insertOrUpdatePosts(*mockPosts.toTypedArray())
-        assert(resultLiveData == liveData)
+        verify(remoteSource).getAllPosts()
+        verify(localSource).insertOrUpdatePosts(*mockedPosts.toTypedArray())
+        verify(localSource).getAllPosts()
+        assertThat(resultLiveData.value, IsEqual(mockedPosts))
+    }
+
+    @Test
+    fun getPostById() {
+        val postId = "1"
+        val mockedPost = mockedPosts.first { it.id == postId }
+        `when`(remoteSource.getPostById(postId)).thenReturn(Single.just(mockedPost))
+        val dbLiveData = MutableLiveData<Post>().apply { value = mockedPost }
+        `when`(localSource.getPostById(postId)).thenReturn(dbLiveData)
+
+        val resultLiveData = sutRepo.getPostById(postId)
+
+        verify(remoteSource).getPostById(postId)
+        verify(localSource).insertOrUpdatePosts(mockedPost)
+        verify(localSource).getPostById(postId)
+        assertThat(resultLiveData.value, IsEqual(mockedPost))
     }
 }
 
