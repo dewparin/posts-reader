@@ -23,7 +23,9 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 }
-
+kapt {
+    generateStubs = true
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
