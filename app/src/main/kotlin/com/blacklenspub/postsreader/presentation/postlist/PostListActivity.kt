@@ -51,7 +51,7 @@ class PostListActivity : LifecycleActivity() {
     private fun getAllPosts() {
         viewModel.getAllPosts().observe(this, Observer {
             if (it != null) {
-                Log.d("Dew", "PostListActivity # Thread ID ${Thread.currentThread().id}")
+                Log.d("Dew", "PostListActivity # Got ${it.size} posts. Thread ID ${Thread.currentThread().id}")
                 showPosts(it)
             } else {
                 Log.d("Dew", "PostListActivity # ERROR : Thread ID ${Thread.currentThread().id}")
@@ -61,7 +61,7 @@ class PostListActivity : LifecycleActivity() {
     }
 
     private fun showPosts(posts: List<Post>) {
-        postAdapter.posts = posts
+        postAdapter.posts = posts.sortedBy { it.id }
     }
 }
 
