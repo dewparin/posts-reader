@@ -45,7 +45,32 @@ class PostDetailViewModelTest {
         sutViewModel.getPostDetail(mockedPostId).observeForever(observer as Observer<Post>)
 
         verify(postRepo).getPostById(mockedPostId)
+        verifyNoMoreInteractions(postRepo)
         verify(observer).onChanged(mockedPost)
+        verifyNoMoreInteractions(observer)
+    }
+
+    @Test
+    fun getPostDetail_getPostForTheSecondTime_ShouldReturnCachedPost() {
+        val repoLiveData = MutableLiveData<Post>().apply { value = mockedPost }
+        `when`(postRepo.getPostById(mockedPostId)).thenReturn(repoLiveData)
+        val observer = mock(Observer::class.java)
+
+        sutViewModel.getPostDetail(mockedPostId).observeForever(observer as Observer<Post>)
+
+        verify(postRepo).getPostById(mockedPostId)
+        verifyNoMoreInteractions(postRepo)
+        verify(observer).onChanged(mockedPost)
+        verifyNoMoreInteractions(observer)
+
+        // below is the 2nd request
+
+        reset(postRepo)
+        reset(observer)
+        sutViewModel.getPostDetail(mockedPostId)
+
+        verifyNoMoreInteractions(postRepo)
+        verifyNoMoreInteractions(observer)
     }
 }
 
