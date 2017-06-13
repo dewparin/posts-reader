@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class RemoteSourceModule(val baseUrl: String) {
+class RemoteDataModule(val baseUrl: String) {
 
     @Provides @Singleton
     fun providePostsReaderApi(retrofit: Retrofit): PostsReaderApi

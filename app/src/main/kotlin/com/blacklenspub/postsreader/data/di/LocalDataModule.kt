@@ -8,7 +8,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class LocalSourceModule(val context: Context) {
+class LocalDataModule(val context: Context) {
 
     @Provides @Singleton
     fun providePostDao(db: AppDatabase): PostDao = db.postDao()
@@ -19,4 +19,3 @@ class LocalSourceModule(val context: Context) {
         return AppDatabase.instance
     }
 }
-
