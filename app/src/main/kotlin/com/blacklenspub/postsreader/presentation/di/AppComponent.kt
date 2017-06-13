@@ -11,9 +11,10 @@ import javax.inject.Singleton
 @Singleton
 @Component(
         modules = arrayOf(
-                PostRepositoryModule::class,
                 LocalSourceModule::class,
-                RemoteSourceModule::class
+                RemoteSourceModule::class,
+
+                PostRepositoryModule::class
         )
 )
 interface AppComponent {
