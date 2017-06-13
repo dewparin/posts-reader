@@ -1,15 +1,12 @@
 package com.blacklenspub.postsreader.data
 
 import android.arch.lifecycle.LiveData
-import android.util.Log
 import com.blacklenspub.postsreader.data.entity.Post
 import com.blacklenspub.postsreader.data.local.PostDao
 import com.blacklenspub.postsreader.data.remote.PostsReaderApi
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Scheduler
 
-class PostRepositoryImpl(val localSource: PostDao, val remoteSource: PostsReaderApi) : PostRepository {
-
-    private val TAG = PostRepositoryImpl::javaClass.name
+class PostRepositoryImpl(val localSource: PostDao, val remoteSource: PostsReaderApi, val scheduler: Scheduler) : PostRepository {
 
     override fun insertOrUpdate(post: Post) {
         localSource.insertOrUpdatePosts(post)
@@ -17,24 +14,18 @@ class PostRepositoryImpl(val localSource: PostDao, val remoteSource: PostsReader
 
     override fun getAllPosts(): LiveData<List<Post>> {
         remoteSource.getAllPosts()
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(scheduler)
                 .subscribe { posts, _ ->
-                    posts?.let {
-                        Log.d(TAG, "Got ${it.size} posts from API.")
-                        localSource.insertOrUpdatePosts(*posts.toTypedArray())
-                    }
+                    posts?.let { localSource.insertOrUpdatePosts(*posts.toTypedArray()) }
                 }
         return localSource.getAllPosts()
     }
 
     override fun getPostById(id: String): LiveData<Post> {
         remoteSource.getPostById(id)
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(scheduler)
                 .subscribe { post, _ ->
-                    post?.let {
-                        Log.d(TAG, "Got post id ${it.id} from API.")
-                        localSource.insertOrUpdatePosts(post)
-                    }
+                    post?.let { localSource.insertOrUpdatePosts(post) }
                 }
         return localSource.getPostById(id)
     }
