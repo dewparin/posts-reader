@@ -13,4 +13,3 @@ interface PostsReaderApi {
     @GET("posts/{id}")
     fun getPostById(@Path("id") id: String): Single<Post>
 }
-

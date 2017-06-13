@@ -37,3 +37,4 @@ class PostRepositoryImpl(val localSource: PostDao, val remoteSource: PostsReader
         return localSource.getPostById(id)
     }
 }
+
