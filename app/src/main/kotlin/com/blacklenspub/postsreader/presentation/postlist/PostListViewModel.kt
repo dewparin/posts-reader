@@ -12,21 +12,4 @@ class PostListViewModel : ViewModel() {
     lateinit var postRepo: PostRepository
 
     fun getAllPosts(): LiveData<List<Post>> = postRepo.getAllPosts()
-
-    // TODO : remove this code
-//    fun addNewPost() {
-//        Thread(Runnable {
-//            var postCount = 0
-//            do {
-//                SystemClock.sleep(3000)
-//                val post = Post().apply {
-//                    id = SystemClock.currentThreadTimeMillis().toString()
-//                    title = "title $id"
-//                    body = "body $id"
-//                }
-//                postRepo.addNewPost(post)
-//                postCount++
-//            } while (true)
-//        }).start()
-//    }
 }
