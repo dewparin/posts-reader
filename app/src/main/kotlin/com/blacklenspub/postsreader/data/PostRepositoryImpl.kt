@@ -9,6 +9,8 @@ import io.reactivex.schedulers.Schedulers
 
 class PostRepositoryImpl(val localSource: PostDao, val remoteSource: PostsReaderApi) : PostRepository {
 
+    private val TAG = PostRepositoryImpl::javaClass.name
+
     override fun insertOrUpdate(post: Post) {
         localSource.insertOrUpdatePosts(post)
     }
@@ -18,7 +20,7 @@ class PostRepositoryImpl(val localSource: PostDao, val remoteSource: PostsReader
                 .subscribeOn(Schedulers.io())
                 .subscribe { posts, _ ->
                     posts?.let {
-                        Log.d("Dew", "PostRepositoryImpl # Got Posts from API. Thread ID ${Thread.currentThread().id}")
+                        Log.d(TAG, "Got ${it.size} posts from API.")
                         localSource.insertOrUpdatePosts(*posts.toTypedArray())
                     }
                 }
@@ -30,7 +32,7 @@ class PostRepositoryImpl(val localSource: PostDao, val remoteSource: PostsReader
                 .subscribeOn(Schedulers.io())
                 .subscribe { post, _ ->
                     post?.let {
-                        Log.d("Dew", "PostRepositoryImpl # Got post by id from API. Thread ID ${Thread.currentThread().id}")
+                        Log.d(TAG, "Got post id ${it.id} from API.")
                         localSource.insertOrUpdatePosts(post)
                     }
                 }

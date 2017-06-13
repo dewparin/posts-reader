@@ -17,6 +17,8 @@ import kotlinx.android.synthetic.main.activity_post_detail.*
 
 class PostDetailActivity : LifecycleActivity() {
 
+    private val TAG = PostDetailActivity::javaClass.name
+
     companion object {
 
         private val KEY_POST_ID = "postId"
@@ -27,7 +29,7 @@ class PostDetailActivity : LifecycleActivity() {
                 }
     }
 
-    lateinit var postId: String
+    private lateinit var postId: String
 
     private val viewModel: PostDetailViewModel by lazy {
         ViewModelProviders.of(this).get(PostDetailViewModel::class.java).also {
@@ -51,18 +53,18 @@ class PostDetailActivity : LifecycleActivity() {
     private fun getPostDetail() {
         viewModel.getPostDetail(postId).observe(this, Observer {
             if (it != null) {
-                Log.d("Dew", "PostDetailActivity # Thread ID ${Thread.currentThread().id}")
                 setPostDetail(it)
                 // TODO : uncomment below statement and then observe result.
                 // modifyPostFromOtherThread(it)
             } else {
-                Log.d("Dew", "PostDetailActivity # ERROR Thread ID ${Thread.currentThread().id}")
-                Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
+                Log.d(TAG, "ERROR # null post data")
+                Toast.makeText(this, "What! Something went wrong.", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
     private fun setPostDetail(post: Post) {
+        Log.d(TAG, "Displaying post detail for post id ${post.id}")
         tvPostTitle.text = post.title
         tvPostBody.text = post.body
     }

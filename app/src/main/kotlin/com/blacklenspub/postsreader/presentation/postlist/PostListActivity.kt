@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_post_list.*
 
 class PostListActivity : LifecycleActivity() {
 
+    private val TAG = PostListActivity::javaClass.name
+
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(PostListViewModel::class.java).also {
             PostsReaderApplication.component.inject(it)
@@ -51,16 +53,16 @@ class PostListActivity : LifecycleActivity() {
     private fun getAllPosts() {
         viewModel.getAllPosts().observe(this, Observer {
             if (it != null) {
-                Log.d("Dew", "PostListActivity # Got ${it.size} posts. Thread ID ${Thread.currentThread().id}")
                 showPosts(it)
             } else {
-                Log.d("Dew", "PostListActivity # ERROR : Thread ID ${Thread.currentThread().id}")
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "ERROR # null post list")
+                Toast.makeText(this, "What! Something went wrong.", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
     private fun showPosts(posts: List<Post>) {
+        Log.d(TAG, "Displaying ${posts.size} posts.")
         postAdapter.posts = posts.sortedBy { it.id }
     }
 }
