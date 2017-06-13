@@ -61,9 +61,12 @@ class PostRepositoryImplTest {
         sutRepo.getAllPosts().observeForever(observer as Observer<List<Post>>)
 
         verify(remoteSource).getAllPosts()
+        verifyNoMoreInteractions(remoteSource)
         verify(localSource).insertOrUpdatePosts(*mockedPosts.toTypedArray())
         verify(localSource).getAllPosts()
+        verifyNoMoreInteractions(localSource)
         verify(observer).onChanged(mockedPosts)
+        verifyNoMoreInteractions(observer)
     }
 
     @Test
@@ -77,9 +80,12 @@ class PostRepositoryImplTest {
         sutRepo.getPostById(postId).observeForever(observer as Observer<Post>)
 
         verify(remoteSource).getPostById(postId)
+        verifyNoMoreInteractions(remoteSource)
         verify(localSource).insertOrUpdatePosts(mockedPost)
         verify(localSource).getPostById(postId)
+        verifyNoMoreInteractions(localSource)
         verify(observer).onChanged(mockedPost)
+        verifyNoMoreInteractions(observer)
     }
 }
 
