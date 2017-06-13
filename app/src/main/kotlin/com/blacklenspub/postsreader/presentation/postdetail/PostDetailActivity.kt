@@ -73,7 +73,7 @@ class PostDetailActivity : LifecycleActivity() {
         if (!isPostModified) {
             Thread(Runnable {
                 SystemClock.sleep(3000)
-                post.title = "Hacked by Black Lens Crew"
+                post.title = "<-- Hacked by Black Lens Crew -->"
                 post.body = "LOL : 55555"
                 AppDatabase.instance.postDao().insertOrUpdatePosts(post)
             }).start()
