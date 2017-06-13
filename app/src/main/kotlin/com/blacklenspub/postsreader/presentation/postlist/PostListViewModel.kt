@@ -11,5 +11,10 @@ class PostListViewModel : ViewModel() {
     @Inject
     lateinit var postRepo: PostRepository
 
-    fun getAllPosts(): LiveData<List<Post>> = postRepo.getAllPosts()
+    private var posts: LiveData<List<Post>>? = null
+
+    fun getAllPosts(): LiveData<List<Post>> {
+        posts = posts ?: postRepo.getAllPosts()
+        return posts!!  // Trust me I'm an Engineer ;-)
+    }
 }
