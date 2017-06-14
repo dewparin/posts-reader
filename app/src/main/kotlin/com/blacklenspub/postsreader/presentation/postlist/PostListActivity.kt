@@ -11,7 +11,7 @@ import android.widget.Toast
 import com.blacklenspub.postsreader.PostsReaderApplication
 import com.blacklenspub.postsreader.R
 import com.blacklenspub.postsreader.data.entity.Post
-import com.blacklenspub.postsreader.presentation.postdetail.PostDetailActivity
+import com.blacklenspub.postsreader.presentation.PageNavigator
 import kotlinx.android.synthetic.main.activity_post_list.*
 
 class PostListActivity : LifecycleActivity() {
@@ -43,8 +43,7 @@ class PostListActivity : LifecycleActivity() {
             addItemDecoration(DividerItemDecoration(context, linearLayoutManager.orientation))
 
             postAdapter.onPostClickListener = {
-                val intent = PostDetailActivity.buildIntent(this@PostListActivity, it)
-                startActivity(intent)
+                PageNavigator.gotoPostDetailActivity(this@PostListActivity, it)
             }
             adapter = postAdapter
         }
