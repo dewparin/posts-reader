@@ -3,7 +3,6 @@ package com.blacklenspub.postsreader.presentation.postdetail
 import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
@@ -20,13 +19,7 @@ class PostDetailActivity : LifecycleActivity() {
     private val TAG = PostDetailActivity::javaClass.name
 
     companion object {
-
-        private val KEY_POST_ID = "postId"
-
-        fun buildIntent(context: Context, postId: String) =
-                Intent(context, PostDetailActivity::class.java).apply {
-                    putExtra(KEY_POST_ID, postId)
-                }
+        val KEY_POST_ID = "postId"
     }
 
     private lateinit var postId: String
