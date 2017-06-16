@@ -70,7 +70,7 @@ class PostDetailActivity : LifecycleActivity() {
                 SystemClock.sleep(3000)
                 post.title = "<-- Hacked by Black Lens Crew -->"
                 post.body = "LOL : 55555"
-                AppDatabase.instance.postDao().insertOrUpdatePosts(post)
+                viewModel.updatePost(post)
             }).start()
             isPostModified = true
         }

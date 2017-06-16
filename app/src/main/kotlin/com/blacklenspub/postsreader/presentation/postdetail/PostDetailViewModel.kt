@@ -17,5 +17,10 @@ class PostDetailViewModel : ViewModel() {
         post = post ?: postRepo.getPostById(postId)
         return post!!   // Don't worry I'm a good Engineer ;-)
     }
+
+    // This function is for demonstration purpose only.
+    fun updatePost(post: Post) {
+        postRepo.insertOrUpdate(post)
+    }
 }
 
