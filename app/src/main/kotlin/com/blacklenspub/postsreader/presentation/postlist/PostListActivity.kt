@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.widget.Toast
 import com.blacklenspub.postsreader.PostsReaderApplication
 import com.blacklenspub.postsreader.R
