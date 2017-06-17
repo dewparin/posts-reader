@@ -6,6 +6,7 @@ import com.blacklenspub.postsreader.data.di.PostRepositoryModule
 import com.blacklenspub.postsreader.data.di.RemoteDataModule
 import com.blacklenspub.postsreader.presentation.di.AppComponent
 import com.blacklenspub.postsreader.presentation.di.DaggerAppComponent
+import com.blacklenspub.postsreader.util.UtilModule
 
 class PostsReaderApplication : Application() {
 
@@ -22,6 +23,7 @@ class PostsReaderApplication : Application() {
 
     private fun buildDependencyGraph() {
         component = DaggerAppComponent.builder()
+                .utilModule(UtilModule())
                 .localDataModule(LocalDataModule(applicationContext))
                 .remoteDataModule(RemoteDataModule(BASE_URL))
                 .postRepositoryModule(PostRepositoryModule())

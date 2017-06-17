@@ -14,6 +14,7 @@ class PostDetailViewModel : ViewModel() {
     private var post: LiveData<Post>? = null
 
     fun getPostDetail(postId: String): LiveData<Post> {
+        // This is a simple way to cache data. You could cache it in db instead.
         post = post ?: postRepo.getPostById(postId)
         return post!!   // Don't worry I'm a good Engineer ;-)
     }

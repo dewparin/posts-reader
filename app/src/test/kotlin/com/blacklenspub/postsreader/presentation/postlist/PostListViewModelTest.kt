@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import com.blacklenspub.postsreader.data.PostRepository
 import com.blacklenspub.postsreader.data.entity.Post
+import com.blacklenspub.postsreader.util.Logger
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -18,8 +19,8 @@ class PostListViewModelTest {
     @Rule @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    @Mock
-    lateinit var postRepo: PostRepository
+    @Mock lateinit var postRepo: PostRepository
+    @Mock lateinit var logger: Logger
 
     lateinit var sutViewModel: PostListViewModel
 
@@ -44,7 +45,10 @@ class PostListViewModelTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        sutViewModel = PostListViewModel().apply { postRepo = this@PostListViewModelTest.postRepo }
+        sutViewModel = PostListViewModel().apply {
+            postRepo = this@PostListViewModelTest.postRepo
+            logger = this@PostListViewModelTest.logger
+        }
     }
 
     @Test
