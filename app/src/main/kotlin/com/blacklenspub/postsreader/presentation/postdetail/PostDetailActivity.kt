@@ -47,7 +47,7 @@ class PostDetailActivity : LifecycleActivity() {
         viewModel.getPostDetail(postId).observe(this, Observer {
             if (it != null) {
                 setPostDetail(it)
-                // TODO : uncomment below statement and then observe result.
+                // TODO : uncomment and then observe result.
                 // modifyPostFromOtherThread(it)
             } else {
                 Log.d(TAG, "ERROR # null post data")
