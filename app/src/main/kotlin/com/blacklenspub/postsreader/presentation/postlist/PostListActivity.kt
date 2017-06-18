@@ -35,6 +35,11 @@ class PostListActivity : LifecycleActivity() {
         getAllPosts()
     }
 
+    override fun onDestroy() {
+        logger.logDebug(TAG, "onDestroy")
+        super.onDestroy()
+    }
+
     private fun setupRecyclerView() {
         rvPosts.apply {
             setHasFixedSize(true)
