@@ -1,5 +1,5 @@
 # posts-reader
-Android architecture sample app using [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html), [RxJava2](https://github.com/ReactiveX/RxJava) and [Dagger2](https://google.github.io/dagger/) plus sample unit tests using JUnit and [Mockito](http://site.mockito.org/).
+Written in [Kotlin](https://kotlinlang.org/), Android architecture sample app using [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html), [RxJava2](https://github.com/ReactiveX/RxJava) and [Dagger2](https://google.github.io/dagger/) plus sample unit tests using JUnit and [Mockito](http://site.mockito.org/).
 
 This app consumes data from [JSONPlaceholder](http://jsonplaceholder.typicode.com/).
 
